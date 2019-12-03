@@ -1,0 +1,19 @@
+version: '3'
+services: 
+  web: # Name of the service
+    build: # Build context is the current directory
+      context: . #The above mapping works. This is just for reference.
+      dockerfile: Dockerfile.dev
+    ports: 
+      - "3000:3000"
+    volumes: 
+      - /app/node_modules # Don't map this folder to anything.
+      - .:/app # Map container to the current app directory.
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes: 
+        - /app/node_modules
+        - .:/app
+    command: ["npm", "run", "test"]
